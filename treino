@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Treino Neural - Atleta</title>
+    <style>
+        body { background: #111; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; overflow: hidden; }
+        #target { width: 300px; height: 300px; border-radius: 50%; background: #333; cursor: pointer; transition: 0.1s; }
+        .stats { margin-top: 20px; font-size: 1.5rem; }
+    </style>
+</head>
+<body>
+
+    <div id="instruction">Aguarde o sinal VERDE...</div>
+    <div id="target"></div>
+    <div class="stats">Tempo: <span id="time">0</span>ms</div>
+
+    <script>
+        const target = document.getElementById('target');
+        const timeDisplay = document.getElementById('time');
+        let startTime, timeout;
+
+        function startTest() {
+            target.style.background = "#333";
+            const randomDelay = Math.random() * 3000 + 1000; // 1 a 4 segundos
+            
+            timeout = setTimeout(() => {
+                target.style.background = "#00ff00"; // Sinal Verde
+                startTime = Date.now();
+            }, randomDelay);
+        }
+
+        target.addEventListener('mousedown', () => {
+            if (target.style.background === "rgb(0, 255, 0)") {
+                const reactionTime = Date.now() - startTime;
+                timeDisplay.innerText = reactionTime;
+                startTest();
+            } else {
+                alert("Queimou a largada!");
+                clearTimeout(timeout);
+                startTest();
+            }
+        });
+
+        startTest();
+    </script>
+</body>
+</html>
